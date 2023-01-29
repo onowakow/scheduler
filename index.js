@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const usersRouter = require('./Routes/users.routes');
-const promptRouter = require('./Routes/prompter.routes');
+const promptsRouter = require('./Routes/prompts.routes');
 const { auth: authMiddleware } = require('./Middleware/auth.middleware');
 const { connect: connectToDB } = require('./DB/connect.db');
 
@@ -22,4 +22,4 @@ app.listen(port, () => {
 });
 
 app.use('/users', usersRouter);
-app.use('/prompt', authMiddleware, promptRouter);
+app.use('/prompts', authMiddleware, promptsRouter);

@@ -14,7 +14,7 @@ async function register(req, res) {
 
   try {
     await user.save();
-    res.send({ message: `User ${req.body.email} registered.` });
+    res.status(200).json({ message: `User ${req.body.email} registered.` });
   } catch (err) {
     res.status(500).send(err);
   }
