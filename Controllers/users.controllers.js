@@ -1,12 +1,17 @@
 const { User: UserModel } = require('../Models/users.model');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const { requestFieldMissing } = require('./utils/httpResponses');
 
 async function register(req, res) {
-  const { salt, hash } = saltAndHashPassword(req.body.password);
+  const { email, password } = req.body;
+  if (!password) return requestFieldMissing(res, 'password');
+  if (!email) return requestFieldMissing(res, 'email');
+
+  const { salt, hash } = saltAndHashPassword(password);
 
   const user = new UserModel({
-    email: req.body.email,
+    email,
     salt,
     hash,
     role: 'normal',
@@ -14,7 +19,7 @@ async function register(req, res) {
 
   try {
     await user.save();
-    res.status(200).json({ message: `User ${req.body.email} registered.` });
+    res.status(200).json({ message: `user ${email} registered` });
   } catch (err) {
     res.status(500).send(err);
   }
@@ -22,9 +27,17 @@ async function register(req, res) {
 
 async function login(req, res) {
   const { email, password } = req.body;
-  const user = await UserModel.findOne({ email });
-  if (user === null)
-    return res.status(401).json({ message: 'no user found by that email' });
+  if (!email) return requestFieldMissing(res, 'email');
+  if (!password) return requestFieldMissing(res, 'password');
+
+  let user;
+  try {
+    user = await UserModel.findOne({ email });
+    if (user === null)
+      return res.status(401).json({ message: 'no user found by that email' });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
 
   const { salt, hash, role } = user;
   const passwordIsValid = validatePassword(password, salt, hash);

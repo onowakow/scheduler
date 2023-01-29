@@ -10,9 +10,13 @@ const PromptSchema = new mongoose.Schema({
       type: String,
     },
   ],
-  userEmail: {
+  email: {
     type: String,
     required: true,
+  },
+  acceptedSlot: {
+    type: String,
+    required: false,
   },
   created: {
     type: Date,
