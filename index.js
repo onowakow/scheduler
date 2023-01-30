@@ -5,6 +5,7 @@ const usersRouter = require('./Routes/users.routes');
 const promptsRouter = require('./Routes/prompts.routes');
 const { auth: authMiddleware } = require('./Middleware/auth.middleware');
 const { connect: connectToDB } = require('./DB/connect.db');
+const { sendMail } = require('./Email/email');
 
 connectToDB();
 const app = express();
@@ -22,4 +23,4 @@ app.listen(port, () => {
 });
 
 app.use('/users', usersRouter);
-app.use('/prompts', authMiddleware, promptsRouter);
+app.use('/prompts', promptsRouter);

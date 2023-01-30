@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+/** TODO: Consider removing acceptedSlot */
+
 const PromptSchema = new mongoose.Schema({
   subject: {
     type: String,
@@ -7,20 +9,25 @@ const PromptSchema = new mongoose.Schema({
   },
   slots: [
     {
-      type: String,
+      type: [String],
+      required: true,
     },
   ],
   email: {
     type: String,
     required: true,
   },
-  acceptedSlot: {
-    type: String,
-    required: false,
-  },
   created: {
     type: Date,
     default: Date.now,
+  },
+  counterSlots: [
+    {
+      type: [String],
+    },
+  ],
+  acceptedSlot: {
+    type: [String],
   },
 });
 

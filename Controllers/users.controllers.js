@@ -1,4 +1,4 @@
-const { User: UserModel } = require('../Models/users.model');
+const { User: UserModel } = require('../Models/user.model');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { requestFieldMissing } = require('./utils/httpResponses');

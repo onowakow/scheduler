@@ -1,7 +1,7 @@
-const { Prompt } = require('../Models/prompt.model');
-const { requestFieldMissing } = require('./utils/httpResponses');
+const { Prompt } = require('../../Models/prompt.model');
+const { requestFieldMissing } = require('../utils/httpResponses');
 
-async function promptById(req, res) {
+async function getPromptById(req, res) {
   const { _id } = req.params;
   if (!_id) return requestFieldMissing(res, 'id');
 
@@ -15,7 +15,7 @@ async function promptById(req, res) {
   res.status(200).json('okay');
 }
 
-async function myPrompts(req, res) {
+async function getAuthHolderPrompts(req, res) {
   try {
     const prompts = await Prompt.find({ email: res.locals.email });
     return res.status(200).json(prompts);
@@ -24,7 +24,7 @@ async function myPrompts(req, res) {
   }
 }
 
-async function newPrompt(req, res) {
+async function createPrompt(req, res) {
   const { slots: req_slots } = req.body;
   const { subject } = req.body;
   const { email } = res.locals;
@@ -56,4 +56,4 @@ async function newPrompt(req, res) {
   }
 }
 
-module.exports = { newPrompt, myPrompts, promptById };
+module.exports = { createPrompt, getAuthHolderPrompts, getPromptById };
