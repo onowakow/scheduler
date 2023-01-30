@@ -43,10 +43,17 @@ async function createPrompt(req, res) {
       .json({ message: 'slots are unable to be parsed as JSON' });
   }
 
+  const options = slots.map((slot) => {
+    return {
+      slot,
+      ownerEmail: email,
+    };
+  });
+
   try {
     const prompt = new Prompt({
       subject,
-      slots,
+      options,
       email: res.locals.email,
     });
     await prompt.save();
