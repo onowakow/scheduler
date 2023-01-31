@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
+import { Prompt } from './prompt.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  title = 'scheduler-app';
-}
+export class AppComponent {}
