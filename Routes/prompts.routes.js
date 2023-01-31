@@ -8,10 +8,13 @@ router.post('/', authMiddleware, promptsControllers.createPrompt);
 router.get('/', authMiddleware, promptsControllers.getAuthHolderPrompts);
 
 router.get('/:_id', /* No Auth */ promptsControllers.getPromptById);
-router.put('/:_id/slots', /* No Auth */ putPromptsControllers.modifySlots);
 router.put(
-  '/:_id/acceptedslot',
-  /* No Auth */ putPromptsControllers.modifyAcceptedSlot
+  '/:_id/options',
+  /* No Auth */ putPromptsControllers.addOptionsToPrompt
+);
+router.put(
+  '/:_id/acceptoption',
+  /* No Auth */ putPromptsControllers.acceptOption
 );
 
 module.exports = router;

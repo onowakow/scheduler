@@ -1,7 +1,7 @@
 const { Prompt } = require('../../Models/prompt.model');
 const { requestFieldMissing } = require('../utils/httpResponses');
 
-async function modifySlots(req, res) {
+async function addOptionsToPrompt(req, res) {
   const { slots: req_slots } = req.body;
   const { email } = req.body;
   const { _id } = req.params;
@@ -61,6 +61,41 @@ async function modifySlots(req, res) {
   res.status(200).json(updatedPrompt);
 }
 
-async function modifyAcceptedSlot(req, res) {}
+async function acceptOption(req, res) {
+  const { _id: prompt_id } = req.params;
+  const { option_id } = req.body;
+  if (!option_id) return requestFieldMissing(res, 'slot _id');
+  if (!prompt_id) return requestFieldMissing(res, 'prompt _id');
 
-module.exports = { modifySlots, modifyAcceptedSlot };
+  let option;
+  try {
+    const prompt = await Prompt.findOne({ _id: prompt_id }, 'options');
+    if (prompt === null)
+      return res.status(400).json({ message: 'no prompt found by that _id' });
+
+    option = prompt.options.find((option) => String(option._id) === option_id);
+    if (!option)
+      return res.status(400).json({ message: 'no option found by that _id' });
+  } catch (err) {
+    return res.status(500).json(err.message);
+  }
+
+  let updatedPrompt;
+  try {
+    updatedPrompt = await Prompt.findOneAndUpdate(
+      { _id: prompt_id },
+      {
+        $set: { acceptedOption: option },
+      },
+      {
+        new: true,
+      }
+    );
+  } catch (err) {
+    return res.status(500).json(err.message);
+  }
+
+  return res.status(200).json(updatedPrompt);
+}
+
+module.exports = { addOptionsToPrompt, acceptOption };
