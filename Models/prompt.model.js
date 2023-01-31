@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
 
-/** TODO: Consider removing acceptedSlot */
-
 const Option = {
   slot: { type: [String], required: true },
   ownerEmail: {
     type: String,
-    required: true,
+    default: 'Guest',
   },
-  rejected: { type: Boolean, required: true, default: false },
+  rejected: { type: Boolean, default: false },
 };
 
 const PromptSchema = new mongoose.Schema({
@@ -17,11 +15,6 @@ const PromptSchema = new mongoose.Schema({
     required: true,
   },
   options: [Option],
-  // rejectedSlots: [
-  //   {
-  //     type: [String],
-  //   },
-  // ],
   acceptedOption: {
     type: Option,
     required: false,

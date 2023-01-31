@@ -3,9 +3,12 @@ const { requestFieldMissing } = require('../utils/httpResponses');
 
 async function modifySlots(req, res) {
   const { slots: req_slots } = req.body;
+  const { email } = req.body;
   const { _id } = req.params;
 
   if (!req_slots) return requestFieldMissing(res, 'slots');
+  // Currently, email is required. In the future, 'guest' status may be allowed.
+  if (!email) return requestFieldMissing(res, 'email');
 
   let prompt;
   try {
@@ -28,12 +31,24 @@ async function modifySlots(req, res) {
   }
 
   let updatedPrompt;
+  const newOptions = slots.map((slot) => {
+    return {
+      slot,
+      ownerEmail: email,
+    };
+  });
   try {
+    await Prompt.findOneAndUpdate(
+      { _id },
+      {
+        $set: { 'options.$[].rejected': true },
+      }
+    );
+
     updatedPrompt = await Prompt.findOneAndUpdate(
       { _id },
       {
-        $set: { $each: { slots: { rejected: true } } },
-        // $push: { rejectedSlots: { $each: prompt.slots } },
+        $push: { options: { $each: newOptions } },
       },
       {
         new: true,
