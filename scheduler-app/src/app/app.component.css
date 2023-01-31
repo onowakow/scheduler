@@ -1,0 +1,9 @@
+.spacer {
+  flex: 1 1 auto
+}
+
+.icon {
+  margin-right: 1rem;
+  font-size: 2.5rem;
+  text-decoration: underline;
+}
