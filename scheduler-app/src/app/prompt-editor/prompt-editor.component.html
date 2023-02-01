@@ -1,0 +1,32 @@
+<h3>New Prompt</h3>
+<form>
+  <div class="form-group mb-2">
+    <label for="subject" class="mb-1">Subject</label>
+    <input
+      class="form-control"
+      type="text"
+      id="subject"
+      placeholder="ie. Owen's Zoom Meeting"
+      [(ngModel)]="prompt.subject"
+      name="subject"
+    />
+  </div>
+  <div class="form-group mb-2">
+    <label for="duration" class="mb-1">Duration (Minutes)</label>
+    <input
+      class="form-control"
+      type="number"
+      id="duration"
+      placeholder="ie. Owen's Zoom Meeting"
+      [(ngModel)]="prompt.duration"
+      name="duration"
+    />
+  </div>
+  <div class="form-group mb-2">
+    <label for="duration" class="mb-1">Options</label>
+    <ul class="list-group">
+      <li *ngFor="let slot of prompt.slots" class="list-group-item"></li>
+    </ul>
+  </div>
+  <button class="btn btn-success">Create Prompt</button>
+</form>

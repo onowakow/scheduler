@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Prompt } from './prompt.model';
 
 @Component({
   selector: 'app-root',
