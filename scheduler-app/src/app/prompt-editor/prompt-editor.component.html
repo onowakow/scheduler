@@ -25,7 +25,9 @@
   <div class="form-group mb-2">
     <label for="duration" class="mb-1">Options</label>
     <ul class="list-group">
-      <li *ngFor="let slot of prompt.slots" class="list-group-item"></li>
+      <li *ngFor="let startTime of prompt.startTimes" class="list-group-item">
+        {{ startTime | date : "short" }}
+      </li>
     </ul>
   </div>
   <button class="btn btn-success">Create Prompt</button>
