@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Login } from './login.model';
-import { Form, FormBuilder } from '@angular/forms';
+import { Form, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { LoginService } from './login.service';
-/* Does a service/injectable need to be imported elsewhere? app mod? */
-// import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -13,17 +11,19 @@ import { LoginService } from './login.service';
   providers: [LoginService],
 })
 export class LoginComponent {
-  loginForm = this.fromBuilder.group({
-    email: '',
-    password: '',
+  loginForm = new FormGroup({
+    email: new FormControl(''),
+    password: new FormControl(''),
   });
 
-  constructor(
-    private fromBuilder: FormBuilder,
-    private loginService: LoginService
-  ) {}
+  constructor(private loginService: LoginService) {}
+
+  clearForm(): void {
+    this.loginForm.setValue({ email: '', password: '' });
+  }
 
   onSubmit(): void {
-    console.log('Submit');
+    console.warn(this.loginForm.value);
+    // this.loginService.attemptLogin();
   }
 }

@@ -5,6 +5,7 @@
       class="form-control"
       type="text"
       id="emailLoginInput"
+      autocomplete="email"
       placeholder="Email"
       formControlName="email"
       name="emailLoginInput"
@@ -21,5 +22,8 @@
       name="passwordLoginInput"
     />
   </div>
-  <button type="submit" class="btn btn-primary">Login</button>
+  <button type="submit" class="btn btn-primary me-2">Login</button>
+  <button type="button" class="btn btn-warning" (click)="clearForm()">
+    Clear
+  </button>
 </form>
