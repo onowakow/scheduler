@@ -10,18 +10,13 @@ const BASE_PATH = environment.basePath;
 
 @Injectable()
 export class LoginService {
-  login: Login = {
-    email: '',
-    password: '',
-  };
-
   private loginUrl = `${BASE_PATH}/users/login`;
 
   constructor(private http: HttpClient) {}
 
-  attemptLogin(): Observable<Login> {
+  attemptLogin(login: Login): Observable<{ email: string }> {
     return this.http
-      .post<Login>(this.loginUrl, this.login)
+      .post<Login>(this.loginUrl, login)
       .pipe(catchError(this.handleError));
   }
 

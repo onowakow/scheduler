@@ -1,7 +1,13 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Login } from './login.model';
-import { Form, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import {
+  Form,
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { LoginService } from './login.service';
 
 @Component({
@@ -11,9 +17,16 @@ import { LoginService } from './login.service';
   providers: [LoginService],
 })
 export class LoginComponent {
+  loginSuccess = false;
   loginForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+    email: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    password: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
   });
 
   constructor(private loginService: LoginService) {}
@@ -23,7 +36,12 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    console.warn(this.loginForm.value);
-    // this.loginService.attemptLogin();
+    this.clearForm();
+
+    this.loginService
+      .attemptLogin(this.loginForm.getRawValue())
+      .subscribe(() => {
+        this.loginSuccess = true;
+      });
   }
 }

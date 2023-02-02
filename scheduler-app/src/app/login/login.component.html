@@ -22,7 +22,10 @@
       name="passwordLoginInput"
     />
   </div>
-  <button type="submit" class="btn btn-primary me-2">Login</button>
+  <p *ngIf="loginSuccess" class="text-success">Successful Login</p>
+  <button type="submit" *ngIf="loginForm.valid" class="btn btn-primary me-2">
+    Login
+  </button>
   <button type="button" class="btn btn-warning" (click)="clearForm()">
     Clear
   </button>
