@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Login } from './login.model';
 import { Form, FormBuilder } from '@angular/forms';
+import { LoginService } from './login.service';
 /* Does a service/injectable need to be imported elsewhere? app mod? */
 // import { LoginService } from './login.service';
 
@@ -9,6 +10,7 @@ import { Form, FormBuilder } from '@angular/forms';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  providers: [LoginService],
 })
 export class LoginComponent {
   loginForm = this.fromBuilder.group({
@@ -17,9 +19,9 @@ export class LoginComponent {
   });
 
   constructor(
-    private fromBuilder: FormBuilder
-  ) // private loginService: LoginService
-  {}
+    private fromBuilder: FormBuilder,
+    private loginService: LoginService
+  ) {}
 
   onSubmit(): void {
     console.log('Submit');

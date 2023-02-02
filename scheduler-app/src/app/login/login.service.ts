@@ -5,6 +5,8 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Login } from './login.model';
+import { environment } from 'src/environments/environment';
+const BASE_PATH = environment.basePath;
 
 @Injectable()
 export class LoginService {
@@ -13,11 +15,11 @@ export class LoginService {
     password: '',
   };
 
-  private loginUrl = 'http://localhost:3000/users/login';
+  private loginUrl = `${BASE_PATH}/users/login`;
 
   constructor(private http: HttpClient) {}
 
-  attemptLogin() {
+  attemptLogin(): Observable<Login> {
     return this.http
       .post<Login>(this.loginUrl, this.login)
       .pipe(catchError(this.handleError));
