@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Login } from './login.model';
 import { Form, FormBuilder } from '@angular/forms';
+/* Does a service/injectable need to be imported elsewhere? app mod? */
 // import { LoginService } from './login.service';
 
 @Component({
@@ -16,8 +17,9 @@ export class LoginComponent {
   });
 
   constructor(
-    private fromBuilder: FormBuilder // private loginService: LoginService
-  ) {}
+    private fromBuilder: FormBuilder
+  ) // private loginService: LoginService
+  {}
 
   onSubmit(): void {
     console.log('Submit');
