@@ -37,13 +37,12 @@ export class LoginComponent implements OnDestroy {
   }
 
   onSubmit(): void {
-    this.clearForm();
-
     this.loginService
       .attemptLogin(this.loginForm.getRawValue())
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.loginSuccess = true;
+        this.clearForm();
       });
   }
 

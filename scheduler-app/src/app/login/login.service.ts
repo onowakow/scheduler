@@ -16,7 +16,7 @@ export class LoginService {
 
   attemptLogin(login: Login): Observable<{ email: string }> {
     return this.http
-      .post<Login>(this.loginUrl, login)
+      .post<Login>(this.loginUrl, login, { withCredentials: true })
       .pipe(catchError(this.handleError));
   }
 
