@@ -51,6 +51,13 @@ async function login(req, res) {
     .json({ email });
 }
 
+async function logout(req, res) {
+  res
+    .clearCookie('token', { httpOnly: true, SameSite: false })
+    .status(200)
+    .json({ message: 'logout successful' });
+}
+
 const saltAndHashPassword = (password) => {
   const salt = crypto.randomBytes(16).toString('hex');
   const hash = crypto
@@ -79,4 +86,4 @@ const generateJwt = (email, organization_id, smalltown_admin) => {
   );
 };
 
-module.exports = { register, login };
+module.exports = { register, login, logout };
