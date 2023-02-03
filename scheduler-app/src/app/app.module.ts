@@ -9,6 +9,7 @@ import { PromptsListComponent } from './prompts-list/prompts-list.component';
 import { PromptEditorComponent } from './prompt-editor/prompt-editor.component';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
+import { PromptComponent } from './prompts-list/prompt/prompt.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { LoginComponent } from './login/login.component';
     PromptsListComponent,
     PromptEditorComponent,
     LoginComponent,
+    PromptComponent,
   ],
   imports: [
     BrowserModule,

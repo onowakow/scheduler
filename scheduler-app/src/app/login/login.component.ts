@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy } from '@angular/core';
+import { Subject, take, takeUntil } from 'rxjs';
 import { Login } from './login.model';
 import {
   Form,
@@ -16,7 +16,7 @@ import { LoginService } from './login.service';
   styleUrls: ['./login.component.css'],
   providers: [LoginService],
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   loginSuccess = false;
   loginForm = new FormGroup({
     email: new FormControl<string>('', {
@@ -28,6 +28,7 @@ export class LoginComponent {
       validators: [Validators.required],
     }),
   });
+  destroy$ = new Subject<void>();
 
   constructor(private loginService: LoginService) {}
 
@@ -40,8 +41,15 @@ export class LoginComponent {
 
     this.loginService
       .attemptLogin(this.loginForm.getRawValue())
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.loginSuccess = true;
       });
+  }
+
+  ngOnDestroy(): void {
+    /** A better way to unsubscribe from observables */
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
