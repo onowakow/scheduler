@@ -48,7 +48,7 @@ async function login(req, res) {
   res
     .cookie('token', jwtToken, { httpOnly: true, SameSite: false })
     .status(200)
-    .send('login successful');
+    .json({ email });
 }
 
 const saltAndHashPassword = (password) => {
