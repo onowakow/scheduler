@@ -14,7 +14,6 @@ import { LoginService } from '../core/user-services/login.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [LoginService],
 })
 export class LoginComponent implements OnDestroy {
   loginSuccess = false;
@@ -28,7 +27,8 @@ export class LoginComponent implements OnDestroy {
       validators: [Validators.required],
     }),
   });
-  destroy$ = new Subject<void>();
+
+  private destroy$ = new Subject<void>();
 
   constructor(private loginService: LoginService) {}
 
@@ -38,7 +38,7 @@ export class LoginComponent implements OnDestroy {
 
   onSubmit(): void {
     this.loginService
-      .attemptLogin(this.loginForm.getRawValue())
+      .login$(this.loginForm.getRawValue())
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.loginSuccess = true;
@@ -47,7 +47,6 @@ export class LoginComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    /** A better way to unsubscribe from observables */
     this.destroy$.next();
     this.destroy$.complete();
   }

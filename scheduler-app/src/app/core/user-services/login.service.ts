@@ -1,47 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Login } from '../../login/login.model';
 import { environment } from 'src/environments/environment';
 const BASE_PATH = environment.basePath;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LoginService {
   private loginUrl = `${BASE_PATH}/users/login`;
 
   constructor(private http: HttpClient) {}
 
-  attemptLogin(login: Login): Observable<{ email: string }> {
+  login$(login: Login): Observable<{ email: string }> {
     return this.http
       .post<Login>(this.loginUrl, login, { withCredentials: true })
       .pipe(
         tap(() => {
-          this._refreshNeeded$.next(0);
+          this._refreshNeeded$.next();
         })
       );
   }
 
-  private _refreshNeeded$ = new BehaviorSubject(0);
+  private _refreshNeeded$ = new Subject<void>();
   get refreshNeeded$() {
     return this._refreshNeeded$;
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      // Client-side error
-      console.error('An error ocurred:', error.error);
-    } else {
-      console.error(
-        `API returned code ${error.status}, body was: `,
-        error.error
-      );
-    }
-
-    return throwError(
-      () => new Error('Something bad happened; please try again later.')
-    );
   }
 }
