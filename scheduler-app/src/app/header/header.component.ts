@@ -1,14 +1,10 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   OnDestroy,
   OnInit,
-  ViewChild,
 } from '@angular/core';
-import { fromEvent, Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { LogoutService } from '../core/user-services/logout.service';
 import { UserStatusService } from '../core/user-services/user-status.service';
 
