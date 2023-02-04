@@ -58,6 +58,14 @@ async function logout(req, res) {
     .json({ message: 'logout successful' });
 }
 
+async function status(req, res) {
+  const { email } = res.locals;
+
+  res.status(200).json({
+    email,
+  });
+}
+
 const saltAndHashPassword = (password) => {
   const salt = crypto.randomBytes(16).toString('hex');
   const hash = crypto
@@ -86,4 +94,4 @@ const generateJwt = (email, organization_id, smalltown_admin) => {
   );
 };
 
-module.exports = { register, login, logout };
+module.exports = { register, login, logout, status };

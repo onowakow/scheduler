@@ -11,6 +11,9 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { PromptComponent } from './prompts-list/prompt/prompt.component';
 import { OptionComponent } from './option/option.component';
+import { HeaderComponent } from './header/header.component';
+import { CommonModule } from '@angular/common';
+import { NgLetModule } from 'ng-let';
 
 @NgModule({
   declarations: [
@@ -20,8 +23,11 @@ import { OptionComponent } from './option/option.component';
     LoginComponent,
     PromptComponent,
     OptionComponent,
+    HeaderComponent,
   ],
   imports: [
+    CommonModule,
+    NgLetModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,

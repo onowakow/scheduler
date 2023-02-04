@@ -1,23 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Prompt } from './prompt.model';
+import { catchError, of } from 'rxjs';
 const BASE_URL = environment.basePath;
 
 @Injectable({
   providedIn: 'root',
 })
-export class PromptsService {
-  prompts$ = this.http
-    .get<Prompt[]>(`${BASE_URL}/prompts`, {
-      withCredentials: true,
-    })
-    .pipe(
-      catchError((error) => {
-        return of([]);
+export class UserStatusService {
+  getUser$() {
+    return this.http
+      .get<{ email: string }>(`${BASE_URL}/users/status`, {
+        withCredentials: true,
       })
-    );
+      .pipe(catchError((error) => of(null)));
+  }
 
   constructor(private http: HttpClient) {}
 }

@@ -4,7 +4,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { Login } from './login.model';
+import { Login } from '../../login/login.model';
 import { environment } from 'src/environments/environment';
 const BASE_PATH = environment.basePath;
 

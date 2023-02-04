@@ -1,9 +1,9 @@
 <h3>My Prompts</h3>
-<ul *ngIf="prompts$ | async" class="list-group">
-  <li
-    *ngFor="let prompt of prompts$ | async"
-    class="list-group-item list-group-item"
-  >
-    <app-prompt [prompt]="prompt"></app-prompt>
-  </li>
-</ul>
+<ng-component *ngLet="prompts$ | async as prompts">
+  <p *ngIf="prompts">No prompts.</p>
+  <ul *ngIf="prompts" class="list-group">
+    <li *ngFor="let prompt of prompts" class="list-group-item list-group-item">
+      <app-prompt [prompt]="prompt"></app-prompt>
+    </li>
+  </ul>
+</ng-component>

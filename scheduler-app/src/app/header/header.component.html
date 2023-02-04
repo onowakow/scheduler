@@ -1,0 +1,28 @@
+<div class="row">
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <div class="d-flex align-items-center">
+        <span class="logo">S</span>
+        <a href="#" class="navbar-brand h1 mb-0">Scheduler</a>
+      </div>
+      <ng-container *ngLet="user$ | async as user">
+        <button *ngIf="!user" class="btn">Log In</button>
+        <div *ngIf="user" class="dropdown">
+          <button
+            class="btn dropdown-toggle"
+            id="userDropdownMenuButton"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            {{ user.email }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="userDropdownMenuButton">
+            <a (click)="logoutUser()" class="dropdown-item">Logout</a>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </nav>
+</div>

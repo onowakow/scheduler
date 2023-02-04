@@ -8,7 +8,7 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
-import { LoginService } from './login.service';
+import { LoginService } from '../core/user-services/login.service';
 
 @Component({
   selector: 'app-login',
